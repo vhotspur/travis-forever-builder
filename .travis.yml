@@ -1,0 +1,5 @@
+language: shell
+script:
+  - echo It works!
+  - curl --version
+
