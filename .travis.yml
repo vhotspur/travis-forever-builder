@@ -1,5 +1,4 @@
 language: shell
 script:
   - echo It works!
-  - curl --version
-
+  - ./self_update.sh
