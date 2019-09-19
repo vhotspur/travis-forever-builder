@@ -1,12 +1,15 @@
 #!/bin/sh
 
-DEPLOY_KEY_FILE=`mktemp -u -p "$PWD"`
-echo "$DEPLOY_KEY" >"$DEPLOY_KEY_FILE"
+MY_TEMP=`mktemp -d`
+export GIT_SSH_COMMAND="ssh -i $PWD/deploy_key"
 
-date '+%Y-%m-%d %H:%M:%S' >TRIGGER
-git add TRIGGER
-git commit -m "Updating to `cat TRIGGER`"
+git clone "git@github.com:$TRAVIS_REPO_SLUG.git" "$MY_TEMP"
 
-GIT_SSH_COMMAND="ssh -i $DEPLOY_KEY_FILE" git push 
+(
+    cd "$MY_TEMP"
 
-rm -f "$DEPLOY_KEY_FILE"
+    date '+%Y-%m-%d %H:%M:%S' >TRIGGER
+    git add TRIGGER
+    git commit -m "Updating to `cat TRIGGER`"
+    git push
+)

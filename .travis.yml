@@ -1,4 +1,5 @@
 language: shell
 script:
   - echo It works!
+  - openssl aes-256-cbc -K $encrypted_a7ffb98c5e98_key -iv $encrypted_a7ffb98c5e98_iv -in deploy_key.enc -out deploy_key -d
   - ./self_update.sh
